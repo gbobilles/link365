@@ -36,7 +36,7 @@ module.exports = {
 
 Parentregistration: function(first,last,address,town,state,zipcode,email,password,repassword,phone) {
 
-
+var EC = protractor.ExpectedConditions;
 browser.sleep(1000);
 element(by.css('#hoopalert_user_parent_registration_firstName')).click();
 browser.sleep(1000);
@@ -78,8 +78,17 @@ element(by.css('#hoopalert_user_parent_registration_phoneNumbers_0_phoneNumber')
 browser.sleep(1000);
 element(by.css('#hoopalert_user_parent_registration_phoneNumbers_0_phoneNumber')).sendKeys(phone);
 browser.sleep(5000);
-element(by.xpath('//div[@class="recaptcha-checkbox-checkmark"]')).click();
-browser.sleep(9000);
+
+browser.getAllWindowHandles().then(function (handles) {
+  var originalHandle = handles[0];
+  browser.wait(EC.visibilityOf(element(by.tagName("iframe"))), 20000);
+  browser.switchTo().frame(browser.driver.findElement(by.tagName('iframe')));
+  element(by.xpath('//div[@class="recaptcha-checkbox-checkmark"]')).click();
+  browser.switchTo().window(originalHandle);
+  browser.sleep(9000);
+
+  });
+
 },
 
  datebirth:function(){
