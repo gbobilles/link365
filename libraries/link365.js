@@ -78,7 +78,7 @@ element(by.css('#hoopalert_user_parent_registration_phoneNumbers_0_phoneNumber')
 browser.sleep(1000);
 element(by.css('#hoopalert_user_parent_registration_phoneNumbers_0_phoneNumber')).sendKeys(phone);
 browser.sleep(5000);
-element(by.css('#recaptcha-anchor')).click();
+element(by.xpath('//div[@class="recaptcha-checkbox-checkmark"]')).click();
 browser.sleep(9000);
 },
 

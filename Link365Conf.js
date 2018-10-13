@@ -1,4 +1,3 @@
-var Jasmine2HtmlReporter = require('protractor-jasmine2-html-reporter');
 
 exports.config = {
   framework: 'jasmine',
@@ -6,24 +5,28 @@ exports.config = {
   specs: ['link365.js'],
 
   multiCapabilities: [{
-    browserName: 'chrome'
+    browserName: 'chrome',
+    chromeOptions: {
+                args: [ "--incognito", "--disable-gpu","--start-maximized"]
+                //args: ["--headless", "--incognito", "--disable-gpu","--window-size=1600, 1268"]
+
+            }
   }],
 
-
-
-  onPrepare: function() {
-      jasmine.getEnv().addReporter(
-        new Jasmine2HtmlReporter({
-          savePath: './target/screenshots',
-		  fileName: 'MyReportName',
-		  showPassed : true,
-
-        })
-      );
-   },
 
      jasmineNodeOpts: {
     realtimeFailure: true,
 	defaultTimeoutInterval: 2500000
-  }
+},
+
+plugins: [{
+        package: 'protractor-screenshoter-plugin',
+        screenshotPath: './REPORTS/Link365/report',
+        screenshotOnExpect: 'failure+success',
+        screenshotOnSpec: 'none',
+        withLogs: true,
+        writeReportFreq: 'asap',
+        imageToAscii: 'none',
+        clearFoldersBeforeTest: true
+    }]
 }
